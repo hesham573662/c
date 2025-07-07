@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>XSS PoC</title>
+</head>
+<body>
+  <h1>اختبار XSS</h1>
+  <p>اختبر إدخال معلمة في الرابط، مثل:</p>
+  <code>?name=&lt;script&gt;alert('XSS')&lt;/script&gt;</code>
+
+  <hr>
+
+  <div id="output"></div>
+
+  <script>
+    // XSS Vulnerable output
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+    if (name) {
+      document.getElementById('output').innerHTML = "مرحباً " + name;
+    }
+  </script>
+</body>
+</html>
