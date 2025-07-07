@@ -2,23 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>XSS PoC</title>
+  <title>XSS Proof of Concept</title>
+  <style>
+    body { font-family: sans-serif; background-color: #f5f5f5; padding: 20px; }
+    .output { background: #fff; padding: 15px; border: 1px solid #ccc; margin-top: 20px; }
+  </style>
 </head>
 <body>
-  <h1>اختبار XSS</h1>
-  <p>اختبر إدخال معلمة في الرابط، مثل:</p>
-  <code>?name=&lt;script&gt;alert('XSS')&lt;/script&gt;</code>
+  <h1>🛡️ اختبار XSS - Proof of Concept</h1>
+  <p>استخدم الرابط وأدخل معلمة مثل:</p>
+  <code>?input=&lt;script&gt;alert('XSS')&lt;/script&gt;</code>
 
-  <hr>
-
-  <div id="output"></div>
+  <div class="output" id="output">
+    لم يتم إدخال أي بيانات بعد.
+  </div>
 
   <script>
-    // XSS Vulnerable output
+    // قراءة جميع معلمات URL
     const params = new URLSearchParams(window.location.search);
-    const name = params.get('name');
-    if (name) {
-      document.getElementById('output').innerHTML = "مرحباً " + name;
+    const input = params.get('input');
+
+    // طباعة في الصفحة (غير آمن عن قصد)
+    if (input) {
+      document.getElementById('output').innerHTML = "نتيجة الإدخال: " + input;
+
+      // ✅ محاكاة استغلال XSS (اختياري – فعال فقط لو تم إدخال JavaScript)
+      try {
+        console.log("[XSS PoC] Trying to evaluate input...");
+        // تقييم الإدخال (تحذير: خطير ومجرد محاكاة)
+        // eval(input); ← نُعلّقه لتجنب الخطر على بيئات فعلية
+      } catch (err) {
+        console.warn("Execution failed:", err);
+      }
     }
   </script>
 </body>
